@@ -58,8 +58,8 @@ Specification:
 //   }
 
 let players = [{
-  playerId: 1,
-  scores: [3, 4, 5],
+  playerId: 0,
+  scores: [],
   averageScore: 0
 }]
 
@@ -81,7 +81,6 @@ class Leaderboard {
           scores: [score],
           averageScore: 0
         })
-        console.log(players)
       }
     }
   }
@@ -94,7 +93,7 @@ class Leaderboard {
         for (let j = 0; j < players[i].scores.length; j++) {
           players[i].scores[j].pop
         }
-        return players.playerId
+        return players[i]
       }
     }
 
