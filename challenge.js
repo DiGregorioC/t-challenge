@@ -57,48 +57,71 @@ Specification:
 //     this.averageScore = averageScore
 //   }
 
-let players = [{
-  playerId: 0,
-  scores: [],
-  averageScore: 0
-}]
+// add_score(playerId, score) {
+//   for (let i = 0; i < players.length; i++) {
+//     if (players[i].playerId === playerId) {
+//
+//       players[i].scores.push(score)
+//       let sum = 0
+//       sum = players[i].scores.reduce(function(acc, cur) {
+//         return acc + cur
+//       })
+//       let average = sum / players[i].scores.length
+//       players[i].averageScore = average
+//       if (playerId === 3) {
+//         console.log(players[i].averageScore)
+//         console.log(players[i].scores)
+//       }
+//       return players[i].averageScore
+//     } else {
+      // players.push({
+      //   playerId: playerId,
+      //   scores: [],
+      //   averageScore: 0
+      // })
+//     }
+//   }
+// }
+
+let players = []
 
 class Leaderboard {
   add_score(playerId, score) {
-    for (let i = 0; i < players.length; i++) {
-      if (players[i].playerId === playerId) {
-        players[i].scores.push(score)
+    let index = players.findIndex((player) => player.playerId === playerId)
+
+    if (index === -1) {
+      players.push({
+        playerId: playerId,
+        scores: [score],
+        averageScore: score
+      })
+    } else {
+      players[index].scores.push(score)
         let sum = 0
-        sum = players[i].scores.reduce(function(acc, cur) {
+        sum = players[index].scores.reduce(function(acc, cur) {
           return acc + cur
         })
-        let average = sum / players[i].scores.length
-        players[i].averageScore = average
-        return players[i].averageScore
-      } else {
-        players.push({
-          playerId: playerId,
-          scores: [score],
-          averageScore: 0
-        })
-      }
+        let average = sum / players[index].scores.length
+        players[index].averageScore = average
+        return players[index].averageScore
     }
+    console.log(players)
   }
   top(numPlayers) {
-
+    players.sort(function(a, b){
+      return b.averageScore - a.averageScore
+    })
+      return players.slice(numPlayers - 1)
   }
   reset(playerId) {
     for (let i = 0; i < players.length; i++) {
       if (players[i].playerId === playerId) {
-        for (let j = 0; j < players[i].scores.length; j++) {
-          players[i].scores[j].pop
+        players[i].scores = []
+        players[i].averageScore = 0
         }
         return players[i]
       }
     }
-
-  }
-
 }
 
 
